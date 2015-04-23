@@ -22,6 +22,9 @@ RUN \
   bash /tmp/config && \
   rm -f /tmp/config
 
+# Overlay the root filesystem from this repo
+COPY ./container/root /
+
 # Define mountable directories.
 VOLUME ["/etc/mysql", "/var/lib/mysql"]
 
@@ -29,7 +32,7 @@ VOLUME ["/etc/mysql", "/var/lib/mysql"]
 WORKDIR /data
 
 # Define default command.
-CMD ["mysqld_safe"]
+CMD ["/bin/bash", "/run.sh"]
 
 # Expose ports.
 EXPOSE 3306
